@@ -1,10 +1,22 @@
 import scrapy
 import logging
 
+# Palaist crawleri - scrapy runspider QuotesSpider.py
+
 logging.getLogger('scrapy').setLevel(logging.WARNING)
-class main (scrapy.Spider):
-    name = 'Wikipedia'
-    start_urls = ['https://en.wikipedia.org/wiki/Battery_(electricity)']
+class QuotesSpider(scrapy.Spider):
+    name = "quotes"
+
+    
+    start_urls = [
+            'http://quotes.toscrape.com/page/1/',
+            'http://quotes.toscrape.com/page/2/',
+    ]
+        
 
     def parse(self, response):
-        print (response.css('h1#firstHeading::text').extract())
+        page = response.url.split("/")[-2]
+        filename = 'quotes-%s.html' % page
+        with open(filename, 'wb') as f:
+            f.write(response.body)
+        self.log('Saved file %s' % filename)

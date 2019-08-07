@@ -3,3 +3,6 @@ crawler/LICENSE.txt
 /crawler
 /.vscode
 /__pycache__
+/test.json
+/quotes-1.html
+/quotes-2.html
