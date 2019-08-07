@@ -1,0 +1,5 @@
+.vscode/settings.json
+crawler/LICENSE.txt
+/crawler
+/.vscode
+/__pycache__
