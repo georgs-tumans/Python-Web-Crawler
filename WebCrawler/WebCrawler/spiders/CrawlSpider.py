@@ -1,27 +1,33 @@
 import scrapy
-import sys
-import logging
+from ..items import WikiImages
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 
-# Palaist crawleri - scrapy runspider CrawlSpider.py
-# Palaist ar ierakstīšanu json failā - scrapy runspider CrawlSpider.py -o test.json
-logging.getLogger('scrapy').setLevel(logging.WARNING)
-count=0
+# Palaist crawleri - scrapy crawl Wikipedia
 
-class WikiCrawl(CrawlSpider):
+
+class WikiCrawl(scrapy.spiders.CrawlSpider):
     name = 'Wikipedia'
     start_urls = ['https://en.wikipedia.org/wiki/Main_Page']
-
     rules = (
-        Rule(LinkExtractor(allow_domains='en.wikipedia.org'), callback='parse_item', follow=True),
+        Rule(LinkExtractor(allow=()), callback='parse_stuff', follow="True"),
     )
+    count=0
 
-    def parse_item (self, response):
-        global count
-        count = count + 1 
-        print ('Number: '+ str(count) + ' '+ response.url)
-        yield {'Link' : response.url}
+    def parse_stuff (self, response):
+        self.count+=1
+        print('Visiting link nr: ' + str(self.count) + ' ' + response.url)
+        if "wikipedia" in response.url:
+            heading = response.css("h1#firstHeading::text").get()
+            if heading is not None:
+                with open("wiki.txt", 'a+') as f:
+                    f.write(heading+"\r\n")
+        pictures = WikiImages()
+        img_urls = []
+        for shortUrl in response.css("img::attr(src)").getall():
+            img_urls.append('https:'+shortUrl)
+        pictures["image_urls"]=img_urls
+        return pictures
         
             
         

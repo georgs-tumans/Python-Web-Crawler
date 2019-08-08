@@ -6,3 +6,10 @@ crawler/LICENSE.txt
 /test.json
 /quotes-1.html
 /quotes-2.html
+/wiki.txt
+/WebCrawler/WebCrawler/spiders/img
+/WebCrawler/WebCrawler/spiders/__pycache__
+/WebCrawler/WebCrawler/spiders/wiki.txt
+/WebCrawler/WebCrawler/__pycache__/__init__.cpython-37.pyc
+/WebCrawler/WebCrawler/__pycache__/items.cpython-37.pyc
+/WebCrawler/WebCrawler/__pycache__/settings.cpython-37.pyc
